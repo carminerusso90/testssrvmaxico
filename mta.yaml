@@ -1,0 +1,68 @@
+ID: maxicosrvtest
+_schema-version: "2.1"
+version: 0.0.1
+modules:
+  - name: maxicosrvtest-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: maxicosrvtest-db-hdi-container
+  - name: maxicosrvtest-srv
+    type: java
+    path: srv
+    parameters:
+      memory: 1024M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: maxicosrvtest-db-hdi-container
+        properties:
+          JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml:
+            {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]'
+      - name: maxicosrvtest-uaa
+      - name: maxicosrvtest-dest
+      - name: maxicosrvtest_conn
+
+  - name: test-maxico-richieste-srv
+    type: java
+    path: test-maxico-richieste-srv
+    parameters:
+       memory: 1024M
+    provides:
+     - name: test-maxico-richieste-srv_api
+       properties:
+          url: ${default-url}
+    properties:
+      ALLOW_MOCKED_AUTH_HEADER: true
+      SAP_JWT_TRUST_ACL: '[{"clientid" : "*", "identityzone" : "*"}]'
+    requires:
+     - name: maxicosrvtest-uaa
+     - name: maxicosrvtest-dest
+     - name: maxicosrvtest_conn        
+
+resources:
+  - name: maxicosrvtest-db-hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+    type: com.sap.xs.hdi-container
+  - name: maxicosrvtest-uaa
+    parameters:
+      service-plan: application
+      service: xsuaa
+      path: ./xs-security.json
+    type: org.cloudfoundry.managed-service
+  - name: maxicosrvtest-dest
+    parameters:
+      service-plan: lite
+      service: destination  
+    type: org.cloudfoundry.managed-service
+  - name: maxicosrvtest_conn
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite

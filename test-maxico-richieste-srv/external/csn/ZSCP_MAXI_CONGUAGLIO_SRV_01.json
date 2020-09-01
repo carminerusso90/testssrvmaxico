@@ -1,0 +1,73 @@
+{
+    "version": {
+        "csn": "1.0"
+    },
+    "definitions": {
+        "ZSCP_MAXI_CONGUAGLIO_SRV_01.ZSCP_CHECK_VALUES": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "Pod": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 50
+                },
+                "Trader": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 10
+                },
+                "AreaTerritoriale": {
+                    "type": "cds.String",
+                    "length": 4
+                },
+                "Status": {
+                    "type": "cds.String",
+                    "length": 1
+                },
+                "Descrizione": {
+                    "type": "cds.String",
+                    "length": 255
+                }
+            }
+        },
+        "ZSCP_MAXI_CONGUAGLIO_SRV_01.ZSCP_CHECK_VALUES_POD": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "Pod": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 50
+                },
+                "Status": {
+                    "type": "cds.String",
+                    "length": 1
+                },
+                "Descrizione": {
+                    "type": "cds.String",
+                    "length": 255
+                }
+            }
+        },
+        "ZSCP_MAXI_CONGUAGLIO_SRV_01.ZSCP_CHECK_VALUES_TRADER": {
+            "kind": "entity",
+            "@cds.persistence.skip": true,
+            "elements": {
+                "Trader": {
+                    "key": true,
+                    "type": "cds.String",
+                    "length": 10
+                },
+                "Status": {
+                    "type": "cds.String",
+                    "length": 1
+                },
+                "Descrizione": {
+                    "type": "cds.String",
+                    "length": 255
+                }
+            }
+        }
+    }
+}
