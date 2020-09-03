@@ -19,6 +19,9 @@ modules:
       - name: srv_api
         properties:
           url: ${default-url}
+    properties:
+      ALLOW_MOCKED_AUTH_HEADER: true
+      SAP_JWT_TRUST_ACL: '[{"clientid" : "*", "identityzone" : "*"}]'
     requires:
       - name: maxicosrvtest-db-hdi-container
         properties:
@@ -37,14 +40,13 @@ modules:
      - name: test-maxico-richieste-srv_api
        properties:
           url: ${default-url}
-    properties:
-      ALLOW_MOCKED_AUTH_HEADER: true
-      SAP_JWT_TRUST_ACL: '[{"clientid" : "*", "identityzone" : "*"}]'
     requires:
      - name: maxicosrvtest-uaa
      - name: maxicosrvtest-dest
-     - name: maxicosrvtest_conn        
-
+     - name: maxicosrvtest_conn
+    properties:
+      SAP_JWT_TRUST_ACL: '[{"clientid" : "*", "identityzone" : "*"}]'
+    
 resources:
   - name: maxicosrvtest-db-hdi-container
     properties:
